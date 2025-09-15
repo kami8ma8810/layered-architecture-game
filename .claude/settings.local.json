@@ -5,7 +5,11 @@
       "Bash(node:*)",
       "Bash(bun:*)",
       "Bash(rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "mcp__obsidian-mcp-tools__get_server_info",
+      "Bash(pnpm init:*)",
+      "Bash(mkdir:*)",
+      "Bash(pnpm install:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@architecture-quest/shared-domain": ["packages/shared-domain/src"],
+      "@architecture-quest/shared-types": ["packages/shared-types/src"],
+      "@architecture-quest/validation-rules": ["packages/validation-rules/src"],
+      "@architecture-quest/challenge-spec": ["packages/challenge-spec/src"],
+      "@architecture-quest/game-engine": ["packages/game-engine/src"],
+      "@architecture-quest/ui-library": ["packages/ui-library/src"]
+    }
+  },
+  "references": [
+    { "path": "./apps/client" },
+    { "path": "./apps/server" },
+    { "path": "./packages/shared-domain" },
+    { "path": "./packages/shared-types" },
+    { "path": "./packages/validation-rules" },
+    { "path": "./packages/challenge-spec" },
+    { "path": "./packages/game-engine" },
+    { "path": "./packages/ui-library" }
+  ]
+}
