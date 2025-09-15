@@ -9,7 +9,10 @@
       "mcp__obsidian-mcp-tools__get_server_info",
       "Bash(pnpm init:*)",
       "Bash(mkdir:*)",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(git commit:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm vitest run:*)"
     ],
     "deny": [],
     "ask": []
