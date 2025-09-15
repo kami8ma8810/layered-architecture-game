@@ -39,9 +39,6 @@ coverage/
 .nuxt/
 .vite/
 
-# Claude
-.claude/
-
 # Database
 *.sqlite
 *.sqlite3
