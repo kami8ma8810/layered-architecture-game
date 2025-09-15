@@ -82,7 +82,7 @@ export class Challenge {
     if (index < 0 || index >= this.hints.length) {
       return null
     }
-    return this.hints[index]
+    return this.hints[index] ?? null
   }
 
   getDifficultyMultiplier(): number {

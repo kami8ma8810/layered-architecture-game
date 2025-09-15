@@ -48,7 +48,7 @@ export class ArchitectureValidator {
     }
   }
 
-  private validateDependencyDirection(structure: LayerStructure): Violation[] {
+  private validateDependencyDirection(_structure: LayerStructure): Violation[] {
     // LayerStructure.createConnectionで既に検証されているが、
     // ここでは実際の接続に対して再度チェックを行う
     // （テストケースでは直接connectionsを操作している場合があるため）

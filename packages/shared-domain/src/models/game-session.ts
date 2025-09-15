@@ -5,7 +5,6 @@ import { ValidationResult } from './validation-result'
 import { Result } from './result'
 import { ArchitectureValidator } from '../services/architecture-validator'
 import { ValidationRule } from './validation-rule'
-import { Score } from '../value-objects/score'
 
 export enum GameState {
   InProgress = 'in_progress',

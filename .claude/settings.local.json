@@ -12,7 +12,14 @@
       "Bash(pnpm install:*)",
       "Bash(git commit:*)",
       "Bash(pnpm test:*)",
-      "Bash(pnpm vitest run:*)"
+      "Bash(pnpm vitest run:*)",
+      "Bash(npx vitest run:*)",
+      "mcp__serena-mcp-server__find_symbol",
+      "mcp__serena-mcp-server__get_symbols_overview",
+      "mcp__serena-mcp-server__search_for_pattern",
+      "Bash(pnpm build:*)",
+      "Bash(grep:*)",
+      "Bash(pnpm --filter @architecture-quest/server test submit-solution)"
     ],
     "deny": [],
     "ask": []

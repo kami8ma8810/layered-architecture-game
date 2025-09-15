@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmit": false,
+    "module": "ESNext",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@architecture-quest/shared-domain": ["../../packages/shared-domain/src"],
+      "@architecture-quest/shared-types": ["../../packages/shared-types/src"],
+      "@architecture-quest/validation-rules": ["../../packages/validation-rules/src"],
+      "@architecture-quest/challenge-spec": ["../../packages/challenge-spec/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../packages/shared-domain" },
+    { "path": "../../packages/shared-types" },
+    { "path": "../../packages/validation-rules" },
+    { "path": "../../packages/challenge-spec" }
+  ]
+}

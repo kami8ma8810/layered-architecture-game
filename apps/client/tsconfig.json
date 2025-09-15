@@ -1,0 +1,31 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmit": true,
+    "jsx": "preserve",
+    "module": "ESNext",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@architecture-quest/shared-domain": ["../../packages/shared-domain/src"],
+      "@architecture-quest/shared-types": ["../../packages/shared-types/src"],
+      "@architecture-quest/ui-library": ["../../packages/ui-library/src"],
+      "@architecture-quest/game-engine": ["../../packages/game-engine/src"],
+      "@architecture-quest/validation-rules": ["../../packages/validation-rules/src"]
+    }
+  },
+  "include": ["src/**/*", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../packages/shared-domain" },
+    { "path": "../../packages/shared-types" },
+    { "path": "../../packages/ui-library" },
+    { "path": "../../packages/game-engine" },
+    { "path": "../../packages/validation-rules" }
+  ]
+}
