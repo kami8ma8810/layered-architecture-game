@@ -11,8 +11,20 @@ export enum BlockType {
   DomainService = 'domain-service'
 }
 
+export interface BlockProperty {
+  name: string
+  type: string
+}
+
+export interface BlockMethod {
+  name: string
+  lines: number
+}
+
 export class CodeBlock {
   public readonly id: string
+  public properties: BlockProperty[] = []
+  public methods: BlockMethod[] = []
 
   constructor(
     public readonly name: string,

@@ -1,5 +1,5 @@
 import { LayerId, Layer } from '../value-objects/layer-id'
-import { CodeBlock, BlockType } from './code-block'
+import { CodeBlock } from './code-block'
 import { Connection } from './connection'
 import { Result } from './result'
 import { ValidationResult, Violation } from './validation-result'
@@ -84,7 +84,7 @@ export class LayerStructure {
     return Result.ok(connection)
   }
 
-  private validateDependency(fromLayer: LayerId, toLayer: LayerId): Result<void> {
+  private validateDependency(fromLayer: LayerId, toLayer: LayerId): Result<Connection> {
     // ドメイン層は他の層に依存できない
     if (fromLayer === LayerId.Domain && toLayer !== LayerId.Domain) {
       return Result.fail('ドメイン層は他の層に依存できません')
@@ -120,6 +120,117 @@ export class LayerStructure {
       throw new Error(`Layer ${layerId} not found`)
     }
     return layer
+  }
+
+  getConnections(): Connection[] {
+    return [...this.connections]
+  }
+
+  getBlock(blockId: string): { block: CodeBlock; layerId: LayerId } | undefined {
+    return this.blocks.get(blockId)
+  }
+
+  getBlockLayer(blockId: string): LayerId | undefined {
+    return this.blocks.get(blockId)?.layerId
+  }
+
+  getAllBlocks(): { block: CodeBlock; layerId: LayerId }[] {
+    return Array.from(this.blocks.values())
+  }
+
+  detectAllCycles(): string[][] {
+    const cycles: string[][] = []
+    const adjacencyList: Map<string, string[]> = new Map()
+
+    // 隣接リストを構築
+    for (const connection of this.connections) {
+      if (!adjacencyList.has(connection.from)) {
+        adjacencyList.set(connection.from, [])
+      }
+      adjacencyList.get(connection.from)!.push(connection.to)
+    }
+
+    // 各ノードから循環を検出
+    const visited = new Set<string>()
+    
+    for (const blockId of this.blocks.keys()) {
+      if (!visited.has(blockId)) {
+        const recursionStack = new Set<string>()
+        const path: string[] = []
+        this.findCyclesFromNode(
+          blockId,
+          adjacencyList,
+          visited,
+          recursionStack,
+          path,
+          cycles
+        )
+      }
+    }
+
+    return cycles
+  }
+
+  private findCyclesFromNode(
+    node: string,
+    adjacencyList: Map<string, string[]>,
+    visited: Set<string>,
+    recursionStack: Set<string>,
+    path: string[],
+    cycles: string[][]
+  ): void {
+    visited.add(node)
+    recursionStack.add(node)
+    path.push(node)
+
+    const neighbors = adjacencyList.get(node) || []
+    for (const neighbor of neighbors) {
+      if (!visited.has(neighbor)) {
+        this.findCyclesFromNode(
+          neighbor,
+          adjacencyList,
+          visited,
+          recursionStack,
+          path,
+          cycles
+        )
+      } else if (recursionStack.has(neighbor)) {
+        // 循環を検出
+        const cycleStartIndex = path.indexOf(neighbor)
+        const cycle = [...path.slice(cycleStartIndex), neighbor]
+        // 重複を避けるため、正規化してから追加
+        const normalizedCycle = this.normalizeCycle(cycle)
+        if (!this.cycleExists(cycles, normalizedCycle)) {
+          cycles.push(normalizedCycle)
+        }
+      }
+    }
+
+    recursionStack.delete(node)
+    path.pop()
+  }
+
+  private normalizeCycle(cycle: string[]): string[] {
+    // 最小の要素を先頭にして正規化
+    if (cycle.length === 0) return cycle
+    let minIndex = 0
+    let minValue = cycle[0]!
+    
+    for (let i = 1; i < cycle.length; i++) {
+      if (cycle[i]! < minValue) {
+        minValue = cycle[i]!
+        minIndex = i
+      }
+    }
+    
+    return [...cycle.slice(minIndex), ...cycle.slice(0, minIndex)]
+  }
+
+  private cycleExists(cycles: string[][], cycle: string[]): boolean {
+    return cycles.some(existing => 
+      existing.length === cycle.length &&
+      existing.every((val, index) => val === cycle[index])
+    )
   }
 
   validate(): ValidationResult {
