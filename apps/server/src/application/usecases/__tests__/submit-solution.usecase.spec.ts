@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { SubmitSolutionUseCase } from '../submit-solution.usecase'
 import { GameSessionRepository } from '../../repositories/game-session.repository'
-import { GameSession, LayerId, UserId, Challenge } from '@architecture-quest/shared-domain'
+import { GameSession, LayerId, UserId, Challenge, LayerStructure } from '@architecture-quest/shared-domain'
 import { SubmitSolutionInputDTO } from '../../dtos/submit-solution.dto'
 
 describe('SubmitSolutionUseCase', () => {
@@ -11,6 +11,8 @@ describe('SubmitSolutionUseCase', () => {
   beforeEach(() => {
     mockRepository = {
       findById: vi.fn(),
+      findByUserId: vi.fn(),
+      findActiveByUserId: vi.fn(),
       save: vi.fn()
     }
     useCase = new SubmitSolutionUseCase(mockRepository)
@@ -26,8 +28,9 @@ describe('SubmitSolutionUseCase', () => {
         description: '基本的なレイヤードアーキテクチャ',
         difficulty: 'beginner',
         timeLimit: 600,
-        goals: [],
-        hints: []
+        goals: ['正しいレイヤー構造を作成する'],
+        hints: [],
+        initialStructure: LayerStructure.create()
       })
       const session = GameSession.start(
         UserId.create(playerId),
@@ -74,8 +77,9 @@ describe('SubmitSolutionUseCase', () => {
         description: '基本的なレイヤードアーキテクチャ',
         difficulty: 'beginner',
         timeLimit: 600,
-        goals: [],
-        hints: []
+        goals: ['正しいレイヤー構造を作成する'],
+        hints: [],
+        initialStructure: LayerStructure.create()
       })
       const session = GameSession.start(
         UserId.create(playerId),
@@ -141,8 +145,9 @@ describe('SubmitSolutionUseCase', () => {
         description: '基本的なレイヤードアーキテクチャ',
         difficulty: 'beginner',
         timeLimit: 600,
-        goals: [],
-        hints: ['ヒント1']
+        goals: ['正しいレイヤー構造を作成する'],
+        hints: ['ヒント1'],
+        initialStructure: LayerStructure.create()
       })
       const session = GameSession.start(
         UserId.create('player-123'),
@@ -175,8 +180,9 @@ describe('SubmitSolutionUseCase', () => {
         description: '基本的なレイヤードアーキテクチャ',
         difficulty: 'beginner',
         timeLimit: 600,
-        goals: [],
-        hints: []
+        goals: ['正しいレイヤー構造を作成する'],
+        hints: [],
+        initialStructure: LayerStructure.create()
       })
       const session = GameSession.start(
         UserId.create(playerId),
@@ -213,8 +219,9 @@ describe('SubmitSolutionUseCase', () => {
         description: '基本的なレイヤードアーキテクチャ',
         difficulty: 'beginner',
         timeLimit: 600,
-        goals: [],
-        hints: []
+        goals: ['正しいレイヤー構造を作成する'],
+        hints: [],
+        initialStructure: LayerStructure.create()
       })
       const session = GameSession.start(
         UserId.create(playerId),
@@ -238,10 +245,7 @@ describe('SubmitSolutionUseCase', () => {
         }
       }
 
-      const result = await useCase.execute(input)
-
-      expect(result.isFailure()).toBe(true)
-      expect(result.error).toContain('セッションの保存に失敗しました')
+      await expect(useCase.execute(input)).rejects.toThrow('セッションの保存に失敗しました')
       expect(mockRepository.save).toHaveBeenCalledTimes(3)
     })
   })

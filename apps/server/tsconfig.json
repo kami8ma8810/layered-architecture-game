@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "noEmit": false,
+    "allowImportingTsExtensions": false,
     "module": "ESNext",
     "target": "ES2022",
     "lib": ["ES2022"],

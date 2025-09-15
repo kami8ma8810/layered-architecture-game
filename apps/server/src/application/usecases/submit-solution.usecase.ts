@@ -1,4 +1,4 @@
-import { Result, LayerStructure, GameSession, UserId, CodeBlock, BlockType } from '@architecture-quest/shared-domain'
+import { Result, LayerStructure, GameSession, CodeBlock, BlockType } from '@architecture-quest/shared-domain'
 import { UseCase } from '../interfaces/usecase.interface'
 import { GameSessionRepository } from '../repositories/game-session.repository'
 import { ApplicationError } from '../errors/application.error'

@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "noEmit": true,
+    "allowImportingTsExtensions": false,
     "jsx": "preserve",
     "module": "ESNext",
     "target": "ES2022",

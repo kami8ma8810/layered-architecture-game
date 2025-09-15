@@ -19,7 +19,9 @@
       "mcp__serena-mcp-server__search_for_pattern",
       "Bash(pnpm build:*)",
       "Bash(grep:*)",
-      "Bash(pnpm --filter @architecture-quest/server test submit-solution)"
+      "Bash(pnpm --filter @architecture-quest/server test submit-solution)",
+      "mcp__ide__getDiagnostics",
+      "Bash(pnpm typecheck:*)"
     ],
     "deny": [],
     "ask": []
